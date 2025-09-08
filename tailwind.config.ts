@@ -13,12 +13,18 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        orbitron: ['Orbitron', 'monospace'],
+        poppins: ['Poppins', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
+        "background-secondary": "hsl(var(--background-secondary))",
         foreground: "hsl(var(--foreground))",
+        
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -27,36 +33,37 @@ export default {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
+        
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+          border: "hsl(var(--card-border))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+        
+        // Neon Colors
+        neon: {
+          cyan: "hsl(var(--neon-cyan))",
+          purple: "hsl(var(--neon-purple))",
+          green: "hsl(var(--neon-green))",
+          blue: "hsl(var(--neon-blue))",
+          pink: "hsl(var(--neon-pink))",
         },
+        
+        // Game States
+        success: "hsl(var(--success))",
+        error: "hsl(var(--error))",
+        warning: "hsl(var(--warning))",
+      },
+      backgroundImage: {
+        'gradient-cyber': 'var(--gradient-cyber)',
+        'gradient-neon': 'var(--gradient-neon)',
+        'gradient-bg': 'var(--gradient-bg)',
+      },
+      boxShadow: {
+        'glow-cyan': 'var(--glow-cyan)',
+        'glow-purple': 'var(--glow-purple)',
+        'glow-green': 'var(--glow-green)',
+        'shadow-neon': 'var(--shadow-neon)',
       },
       borderRadius: {
         lg: "var(--radius)",

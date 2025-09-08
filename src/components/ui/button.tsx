@@ -15,6 +15,11 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // New Neon Variants for Gaming
+        neon: "bg-gradient-to-r from-neon-cyan to-neon-blue text-background border-2 border-neon-cyan hover:border-neon-blue font-orbitron font-bold uppercase tracking-wider transform hover:scale-105 active:scale-95 shadow-glow-cyan hover:shadow-[0_0_30px_hsl(180_100%_50%/0.6)] transition-all duration-300",
+        neonPurple: "bg-gradient-to-r from-neon-purple to-neon-pink text-background border-2 border-neon-purple hover:border-neon-pink font-orbitron font-bold uppercase tracking-wider transform hover:scale-105 active:scale-95 shadow-glow-purple hover:shadow-[0_0_30px_hsl(270_100%_70%/0.6)] transition-all duration-300",
+        neonGreen: "bg-gradient-to-r from-neon-green to-emerald-400 text-background border-2 border-neon-green hover:border-emerald-400 font-orbitron font-bold uppercase tracking-wider transform hover:scale-105 active:scale-95 shadow-glow-green hover:shadow-[0_0_30px_hsl(120_100%_50%/0.6)] transition-all duration-300",
+        neonGhost: "bg-transparent text-neon-cyan border-2 border-neon-cyan hover:bg-neon-cyan/10 hover:text-foreground font-orbitron font-bold uppercase tracking-wider transform hover:scale-105 active:scale-95 shadow-glow-cyan hover:shadow-[0_0_40px_hsl(180_100%_50%/0.8)] transition-all duration-300",
       },
       size: {
         default: "h-10 px-4 py-2",
