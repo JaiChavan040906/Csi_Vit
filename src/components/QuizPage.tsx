@@ -32,7 +32,7 @@ and paddles send a small white ball flying.`,
 A starting point for a life's pursuit.
 I'm not a room,  but a place to build skills,your core department where knowledge takes root.
 Where am I?`,
-    answer: "git ",
+    answer: "19.0214852, 72.8717522",
     hint: "Give the GPS coordinate."
   },
   {
