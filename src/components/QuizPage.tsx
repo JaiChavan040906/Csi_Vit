@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import TechBackground from '@/components/TechBackground';
-import { Brain, Trophy, Home, CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, Lightbulb } from 'lucide-react';
 
 interface Question {
   id: number;
@@ -23,28 +23,29 @@ and just beyond the doors of VSIT, I wait.
 Inside, virtual heroes come to life on the PS5,
 while miniature battles unfold on a checkered board,
 and paddles send a small white ball flying.`,
-    answer: "DEN",
-    hint: "Think of a fun indoor spot near VSIT with games and PS5."
+    answer: "19.0207663, 72.8707628",
+    hint: "Give the GPS coordinates"
   },
   {
     id: 2,
-    question: `I am a heaven for a quick bite and a fresh start.
-I sit by Gate 2, a popular stop.
-Here, you can rest in my seating area,
-with the FE department and the canteen just a short walk away.
-What am I?`,
-    answer: "NESCAFE",
-    hint: "A coffee and snack corner at Gate 2."
+    question: `I am the heart of an institution,
+A starting point for a life's pursuit.
+I'm not a room,  but a place to build skills,your core department where knowledge takes root.
+Where am I?`,
+    answer: "19.0215943, 72.8711236",
+    hint: "Give the GPS coordinate."
   },
   {
     id: 3,
-    question: `The words I speak are from another time,
-A backward whisper, a scrambled rhyme.
-To find the truth, you must rewind the clock,
-Unwind the sound, from ending to the start.`,
-    answer: "Unlocking the future with CSI, where logic meets innovation and amazing events",
-    hint: "Reverse the audio to hear the actual words.",
-    audioSrc: "/audio.mp3" // placeholder path
+    question: `I speak without a voice, a language of clicks and beeps.
+My words are a sequence of long and short, a secret the night keeps.
+I can signal for help, or tell of a friend,
+And my silence is broken by a light at the end.
+
+What am I?`,
+    answer: "Unlocking the future with CSI where logic meets innovation and amazing events",
+    hint: "Morse code audio, convert it to text",
+    audioSrc: "/audio.wav"
   },
   {
     id: 4,
@@ -58,16 +59,23 @@ Metadata will play its part.
 For decoding : https://stylesuxx.github.io/steganography/`,
     answer: "ghost_in_metadata",
     hint: "Check metadata hidden inside the image.",
-    imageSrc: "/image.png" // placeholder path
+    imageSrc: "/image.png"
   },
   {
     id: 5,
-    question: `43 75 72 69 6F 73 69 74 79 20 75 6E 6C 6F 63 6B 73 20 74 68 65 20 68 69 64 64 65 6E 20 74 72 75 74 68
+    question: `I shift but never move my feet,
+I hide a message, bitter or sweet.
+A letter's place is not its own,
+Another's spot is where it's shown.
+With a key that's born of a classic pair,
+I'll show you secrets I hold in the air.
 
-"Not all secrets are in 0s and 1s. Some are hidden in base 16. Listen to the whispers of hex and reveal the truth!"`,
-    answer: "Curiosity unlocks the hidden truth",
+What am I?
+QGW SJSBHG HSOA WG QFONM`,
+    answer: "csi events team is crazy",
     hint: "Convert the hex string to text."
   }
+  
 ];
 
 const QuizPage = () => {
@@ -78,24 +86,25 @@ const QuizPage = () => {
   const [showFeedback, setShowFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const [isShaking, setIsShaking] = useState(false);
   const [attempts, setAttempts] = useState(0);
+  const [showHint, setShowHint] = useState(false);
 
   const currentQuestion = questions[currentQuestionIndex];
-  const progress = ((currentQuestionIndex) / questions.length) * 100;
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!userAnswer.trim()) return;
 
     const normalizedAnswer = userAnswer.trim().toLowerCase();
     const correctAnswer = currentQuestion.answer.toLowerCase();
-    
+
     if (normalizedAnswer === correctAnswer) {
       setShowFeedback('correct');
       setScore(prev => prev + 10);
       setAttempts(0);
-      
+      setShowHint(false);
+
       setTimeout(() => {
         if (isLastQuestion) {
           navigate('/completion', { state: { finalScore: score + 10 } });
@@ -103,13 +112,14 @@ const QuizPage = () => {
           setCurrentQuestionIndex(prev => prev + 1);
           setUserAnswer('');
           setShowFeedback(null);
+          setShowHint(false);
         }
       }, 1500);
     } else {
       setShowFeedback('incorrect');
       setAttempts(prev => prev + 1);
       setIsShaking(true);
-      
+
       setTimeout(() => {
         setIsShaking(false);
         setShowFeedback(null);
@@ -120,7 +130,7 @@ const QuizPage = () => {
   return (
     <div className="min-h-screen relative flex flex-col items-center justify-center p-4">
       <TechBackground />
-      
+
       <div className="relative z-10 max-w-2xl mx-auto w-full">
         {/* Question Card */}
         <div className="bg-card/20 backdrop-blur-sm border border-card-border/30 rounded-xl p-8 mb-8 hover:border-neon-cyan/30 transition-all duration-300">
@@ -141,9 +151,9 @@ const QuizPage = () => {
           {/* Image placeholder for Q4 */}
           {currentQuestion.imageSrc && (
             <div className="mb-6 flex justify-center">
-              <img 
-                src="image.png" 
-                alt="Question related clue" 
+              <img
+                src={currentQuestion.imageSrc}
+                alt="Question related clue"
                 className="rounded-lg border border-card-border/30 max-h-64 object-contain"
               />
             </div>
@@ -162,19 +172,19 @@ const QuizPage = () => {
                 } ${showFeedback === 'correct' ? 'input-success' : ''}`}
                 disabled={showFeedback === 'correct'}
               />
-              
+
               {showFeedback === 'correct' && (
                 <CheckCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 h-6 w-6 text-neon-green" />
               )}
-              
+
               {showFeedback === 'incorrect' && (
                 <XCircle className="absolute right-3 top-1/2 transform -translate-y-1/2 h-6 w-6 text-error" />
               )}
             </div>
 
-            <Button 
-              type="submit" 
-              variant="neon" 
+            <Button
+              type="submit"
+              variant="neon"
               size="lg"
               className="w-full text-lg py-4"
               disabled={!userAnswer.trim() || showFeedback === 'correct'}
@@ -182,6 +192,26 @@ const QuizPage = () => {
               {showFeedback === 'correct' ? 'Correct!' : 'Submit Answer'}
             </Button>
           </form>
+
+          {/* Hint Button */}
+          {currentQuestion.hint && (
+            <div className="mt-6 text-center">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setShowHint(!showHint)}
+                className="flex items-center gap-2 mx-auto"
+              >
+                <Lightbulb className="h-4 w-4" /> {showHint ? 'Hide Hint' : 'Show Hint'}
+              </Button>
+              {showHint && (
+                <p className="mt-4 text-sm text-muted-foreground italic">
+                  💡 {currentQuestion.hint}
+                </p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
