@@ -56,7 +56,7 @@ Yet shadows hide within the glass.
 Peek beneath my frame of art,  
 Metadata will play its part.
 For decoding : https://stylesuxx.github.io/steganography/`,
-    answer: "flag{ghost_in_metadata}",
+    answer: "ghost_in_metadata",
     hint: "Check metadata hidden inside the image.",
     imageSrc: "/image.png" // placeholder path
   },
