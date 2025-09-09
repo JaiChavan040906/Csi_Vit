@@ -65,7 +65,7 @@ For decoding : https://stylesuxx.github.io/steganography/`,
     question: `43 75 72 69 6F 73 69 74 79 20 75 6E 6C 6F 63 6B 73 20 74 68 65 20 68 69 64 64 65 6E 20 74 72 75 74 68
 
 "Not all secrets are in 0s and 1s. Some are hidden in base 16. Listen to the whispers of hex and reveal the truth!"`,
-    answer: "flag{Curiosity unlocks the hidden truth}",
+    answer: "Curiosity unlocks the hidden truth",
     hint: "Convert the hex string to text."
   }
 ];
