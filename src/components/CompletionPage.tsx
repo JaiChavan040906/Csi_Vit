@@ -8,7 +8,7 @@ const CompletionPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const finalScore = location.state?.finalScore || 0;
-  const maxScore = 30;
+  const maxScore = 50;
   const percentage = (finalScore / maxScore) * 100;
   const [showConfetti, setShowConfetti] = useState(false);
 

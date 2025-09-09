@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import TechBackground from '@/components/TechBackground';
-import { Progress } from '@/components/ui/progress';
 import { Brain, Trophy, Home, CheckCircle, XCircle } from 'lucide-react';
 
 interface Question {
@@ -11,26 +10,63 @@ interface Question {
   question: string;
   answer: string;
   hint?: string;
+  audioSrc?: string;
+  imageSrc?: string;
 }
 
 const questions: Question[] = [
   {
     id: 1,
-    question: "What does HTML stand for?",
-    answer: "HyperText Markup Language",
-    hint: "It's the standard markup language for creating web pages"
+    question: `I am a hub of games and good times.
+Next to the court where shuttlecocks soar,
+and just beyond the doors of VSIT, I wait.
+Inside, virtual heroes come to life on the PS5,
+while miniature battles unfold on a checkered board,
+and paddles send a small white ball flying.`,
+    answer: "DEN",
+    hint: "Think of a fun indoor spot near VSIT with games and PS5."
   },
   {
     id: 2,
-    question: "What is the extension for JavaScript files?",
-    answer: ".js",
-    hint: "Think about the file ending when you save JavaScript code"
+    question: `I am a heaven for a quick bite and a fresh start.
+I sit by Gate 2, a popular stop.
+Here, you can rest in my seating area,
+with the FE department and the canteen just a short walk away.
+What am I?`,
+    answer: "NESCAFE",
+    hint: "A coffee and snack corner at Gate 2."
   },
   {
     id: 3,
-    question: "Which tag is used to link CSS in HTML?",
-    answer: "link",
-    hint: "It's used in the <head> section to connect external stylesheets"
+    question: `The words I speak are from another time,
+A backward whisper, a scrambled rhyme.
+To find the truth, you must rewind the clock,
+Unwind the sound, from ending to the start.`,
+    answer: "Unlocking the future with CSI, where logic meets innovation and amazing events",
+    hint: "Reverse the audio to hear the actual words.",
+    audioSrc: "/audio.mp3" // placeholder path
+  },
+  {
+    id: 4,
+    question: `The Ghost in the Frame (Riddle)
+At first glance, it looks like a totally normal picture, maybe a random scenery, or just some filler image. Nothing suspicious to the eye, then comes clue from riddle:
+
+I’m just a face you scroll and pass,  
+Yet shadows hide within the glass.  
+Peek beneath my frame of art,  
+Metadata will play its part.
+For decoding : https://stylesuxx.github.io/steganography/`,
+    answer: "flag{ghost_in_metadata}",
+    hint: "Check metadata hidden inside the image.",
+    imageSrc: "/image.png" // placeholder path
+  },
+  {
+    id: 5,
+    question: `43 75 72 69 6F 73 69 74 79 20 75 6E 6C 6F 63 6B 73 20 74 68 65 20 68 69 64 64 65 6E 20 74 72 75 74 68
+
+"Not all secrets are in 0s and 1s. Some are hidden in base 16. Listen to the whispers of hex and reveal the truth!"`,
+    answer: "flag{Curiosity unlocks the hidden truth}",
+    hint: "Convert the hex string to text."
   }
 ];
 
@@ -56,7 +92,6 @@ const QuizPage = () => {
     const correctAnswer = currentQuestion.answer.toLowerCase();
     
     if (normalizedAnswer === correctAnswer) {
-      // Correct answer
       setShowFeedback('correct');
       setScore(prev => prev + 10);
       setAttempts(0);
@@ -71,7 +106,6 @@ const QuizPage = () => {
         }
       }, 1500);
     } else {
-      // Incorrect answer
       setShowFeedback('incorrect');
       setAttempts(prev => prev + 1);
       setIsShaking(true);
@@ -83,78 +117,37 @@ const QuizPage = () => {
     }
   };
 
-  const motivationalMessages = [
-    "Great Job! 🚀",
-    "Nice Work, Keep Going! ⭐",
-    "Excellent! You're on fire! 🔥",
-    "Outstanding! Tech Master! 💻",
-    "Perfect! Keep the momentum! ⚡"
-  ];
-
-  const getRandomMotivationalMessage = () => {
-    return motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
-  };
-
   return (
     <div className="min-h-screen relative flex flex-col items-center justify-center p-4">
       <TechBackground />
       
       <div className="relative z-10 max-w-2xl mx-auto w-full">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <Button 
-              variant="neonGhost" 
-              size="sm"
-              onClick={() => navigate('/')}
-              className="flex items-center space-x-2"
-            >
-              <Home className="h-4 w-4" />
-              <span>Home</span>
-            </Button>
-            
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2 bg-card/20 backdrop-blur-sm border border-card-border/30 rounded-lg px-4 py-2">
-                <Trophy className="h-5 w-5 text-neon-green" />
-                <span className="font-orbitron font-bold text-neon-green score-pulse">
-                  {score}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <h1 className="text-3xl md:text-4xl font-orbitron font-black mb-4">
-            <span className="neon-text">Tech</span>{' '}
-            <span className="neon-text-purple">Challenge</span>
-          </h1>
-          
-          <div className="flex items-center justify-center space-x-4 mb-6">
-            <Brain className="h-6 w-6 text-neon-cyan" />
-            <span className="text-lg text-foreground/70">
-              Question {currentQuestionIndex + 1} of {questions.length}
-            </span>
-          </div>
-
-          {/* Progress Bar */}
-          <div className="mb-8">
-            <div className="flex justify-between text-sm text-foreground/60 mb-2">
-              <span>Progress</span>
-              <span>{Math.round(progress)}%</span>
-            </div>
-            <div className="w-full bg-card/20 rounded-full h-3 border border-card-border/30">
-              <div 
-                className="progress-neon h-full rounded-full transition-all duration-500 ease-out"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-          </div>
-        </div>
-
         {/* Question Card */}
         <div className="bg-card/20 backdrop-blur-sm border border-card-border/30 rounded-xl p-8 mb-8 hover:border-neon-cyan/30 transition-all duration-300">
           <h2 className="text-xl md:text-2xl font-poppins font-semibold mb-6 text-center leading-relaxed">
             {currentQuestion.question}
           </h2>
+
+          {/* Audio placeholder for Q3 */}
+          {currentQuestion.audioSrc && (
+            <div className="mb-6 flex justify-center">
+              <audio controls className="w-full">
+                <source src={currentQuestion.audioSrc} type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          )}
+
+          {/* Image placeholder for Q4 */}
+          {currentQuestion.imageSrc && (
+            <div className="mb-6 flex justify-center">
+              <img 
+                src="image.png" 
+                alt="Question related clue" 
+                className="rounded-lg border border-card-border/30 max-h-64 object-contain"
+              />
+            </div>
+          )}
 
           {/* Answer Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -189,47 +182,6 @@ const QuizPage = () => {
               {showFeedback === 'correct' ? 'Correct!' : 'Submit Answer'}
             </Button>
           </form>
-
-          {/* Feedback Messages */}
-          {showFeedback === 'incorrect' && (
-            <div className="mt-6 text-center">
-              <div className="bg-error/10 border border-error/30 rounded-lg p-4">
-                <p className="text-error font-semibold mb-2">Try Again!</p>
-                <p className="text-foreground/70 text-sm">
-                  {attempts >= 2 && currentQuestion.hint && (
-                    <>💡 Hint: {currentQuestion.hint}</>
-                  )}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {showFeedback === 'correct' && (
-            <div className="mt-6 text-center">
-              <div className="bg-neon-green/10 border border-neon-green/30 rounded-lg p-4">
-                <p className="text-neon-green font-bold text-lg mb-2">
-                  {getRandomMotivationalMessage()}
-                </p>
-                <p className="text-foreground/70">+10 points earned!</p>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Question Navigation */}
-        <div className="flex justify-center space-x-2">
-          {questions.map((_, index) => (
-            <div
-              key={index}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index < currentQuestionIndex 
-                  ? 'bg-neon-green shadow-glow-green' 
-                  : index === currentQuestionIndex 
-                  ? 'bg-neon-cyan shadow-glow-cyan animate-pulse' 
-                  : 'bg-card-border/30'
-              }`}
-            />
-          ))}
         </div>
       </div>
     </div>

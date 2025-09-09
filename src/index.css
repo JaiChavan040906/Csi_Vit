@@ -121,10 +121,10 @@
   .neon-text-purple {
     color: hsl(270 100% 70%);
     text-shadow: 
-      0 0 5px hsl(270 100% 70%),
-      0 0 10px hsl(270 100% 70%),
-      0 0 15px hsl(270 100% 70%),
-      0 0 20px hsl(270 100% 70%);
+    0 0 5px hsl(270 80% 70%),
+    0 0 10px hsl(270 80% 70%),
+    0 0 15px hsl(270 80% 70%),
+    0 0 20px hsl(270 80% 70%);
   }
 
   /* Glowing Button Effects */
